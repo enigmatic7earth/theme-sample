@@ -60,8 +60,21 @@ class ViewController: UIViewController {
         let themeColorData = UserDefaults.standard.value(forKey: "themeColor")
         let contrastColorData = UserDefaults.standard.value(forKey: "contrastThemeColor")
         
-        themeColor = (NSKeyedUnarchiver.unarchiveObject(with: themeColorData as! Data) as? UIColor)!
-        themeContrastColor = (NSKeyedUnarchiver.unarchiveObject(with: contrastColorData as! Data) as? UIColor)!
+        if themeColorData == nil {
+            themeColor = UIColor.black
+        }
+        else{
+            themeColor = NSKeyedUnarchiver.unarchiveObject(with: themeColorData as! Data) as! UIColor
+        }
+        if contrastColorData == nil {
+            themeContrastColor = UIColor.white
+        }
+        else{
+            themeContrastColor = NSKeyedUnarchiver.unarchiveObject(with: contrastColorData as! Data) as! UIColor
+        }
+
+        
+        
         
         styleUI()
     }
@@ -74,6 +87,8 @@ class ViewController: UIViewController {
     func styleUI(){
         
         self.segmentedControl.tintColor = self.themeColor
+        //self.segmentedControl.setTitleTextAttributes([NSAttributedStringKey.backgroundColor : self.themeColor], for: .normal)
+        //self.segmentedControl.setTitleTextAttributes([NSAttributedStringKey.foregroundColor : self.themeContrastColor], for: .normal)
         
         self.tableView.tintColor = self.themeColor
         self.tableView.layer.borderWidth = 1.0
